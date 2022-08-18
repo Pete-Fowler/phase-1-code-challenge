@@ -15,16 +15,32 @@ const newName = document.querySelector('form#character-form input#name');
 const newImage = document.querySelector('#image-url');
 let clicked;
 
+const patch = (body) => {
+  const config = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  }
+  fetch(`http://localhost:3000/characters/${clicked.id}`, config)
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.log(err.message));
+}
+
 const resetVotes = () => {
   clicked.votes = 0;
   votes.textContent = 0;
   votesInput.value = '';
+  patch({'votes': 0});
 }
 
 const addVotes = (e) => {
   e.preventDefault();
   clicked.votes += parseInt(votesInput.value);
   votes.textContent = clicked.votes;
+  patch({'votes': clicked.votes});
 }
 
 const displayDetail = (character) => {
