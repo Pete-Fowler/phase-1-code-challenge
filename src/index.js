@@ -1,10 +1,12 @@
 const bar = document.querySelector('#character-bar');
 const title = document.querySelector('#name');
 const image = document.querySelector('#image');
+const votes = document.querySelector('#vote-count');
 
 const displayDetail = (character) => {
   title.textContent = character.name;
   image.src = character.image;
+  votes.textContent = character.votes;
 }
 
 const displayCharacters = (data) => {
