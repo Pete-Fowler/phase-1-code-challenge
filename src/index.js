@@ -4,7 +4,14 @@ const image = document.querySelector('#image');
 const votes = document.querySelector('#vote-count');
 const form = document.querySelector('#votes-form');
 const input = document.querySelector('#votes');
+const resetBtn = document.querySelector('#reset-btn');
 let clicked;
+
+const resetVotes = () => {
+  clicked.votes = 0;
+  votes.textContent = 0;
+  input.value = '';
+}
 
 const addVotes = (e) => {
   e.preventDefault();
@@ -36,7 +43,12 @@ const getCharacters = () => {
   });
 }
 
+const listen = () => {
+  form.addEventListener('submit', addVotes);
+  resetBtn.addEventListener('click', resetVotes);
+}
+
 const init = (() => {
   getCharacters();
-  form.addEventListener('submit', addVotes)
+  listen();
 })();
