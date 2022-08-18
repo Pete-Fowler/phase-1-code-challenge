@@ -2,8 +2,18 @@ const bar = document.querySelector('#character-bar');
 const title = document.querySelector('#name');
 const image = document.querySelector('#image');
 const votes = document.querySelector('#vote-count');
+const form = document.querySelector('#votes-form');
+const input = document.querySelector('#votes');
+let clicked;
+
+const addVotes = (e) => {
+  e.preventDefault();
+  clicked.votes += parseInt(input.value);
+  votes.textContent = clicked.votes;
+}
 
 const displayDetail = (character) => {
+  clicked = character;
   title.textContent = character.name;
   image.src = character.image;
   votes.textContent = character.votes;
@@ -28,4 +38,5 @@ const getCharacters = () => {
 
 const init = (() => {
   getCharacters();
+  form.addEventListener('submit', addVotes)
 })();
