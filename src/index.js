@@ -26,7 +26,7 @@ const patch = (body) => {
   fetch(`http://localhost:3000/characters/${clicked.id}`, config)
   .then(res => res.json())
   .then(data => console.log(data))
-  .catch(err => console.log(err.message));
+  .catch(err => alert(err.message));
 }
 
 const resetVotes = () => {
@@ -45,6 +45,7 @@ const addVotes = (e) => {
 
 const displayDetail = (character) => {
   clicked = character;
+  votes.value = '';
   title.textContent = character.name;
   image.src = character.image;
   votes.textContent = character.votes;
@@ -73,16 +74,33 @@ const newChar = (e) => {
     image: newImage.value,
     votes: 0,
   }
-  displayDetail(character);
-  displayOne(character);
+  
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(character),
+  }
+  fetch(`http://localhost:3000/characters`, config)
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+    character.id = data.id;
+    displayDetail(character);
+    displayOne(character);
+  })
+  .catch(err => alert(err.message));
 }
 
 const getCharacters = () => {
   fetch(`http://localhost:3000/characters`)
   .then(res => res.json())
   .then(data => {
+    console.log(data);
     displayCharacters(data);
-  });
+  })
+  .catch(err => alert(err.message));
 }
 
 const listen = () => {
